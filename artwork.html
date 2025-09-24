@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork Details - KalaKriti</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/artwork.css">
+    
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html" style="color: #f0f0f0; text-decoration: none;">KalaKriti</a></div>
+        </nav>
+    </header>
+
+    <main class="artwork-detail-container">
+        <div class="artwork-display">
+            <model-viewer src="assests/models/base_basic_shaded.glb"
+                          ar
+                          ar-modes="webxr scene-viewer quick-look"
+                          camera-controls
+                          poster="assets/images/pot_poster.png"
+                          shadow-intensity="1"
+                          auto-rotate
+                          alt="A 3D model of a painted pot">
+            </model-viewer>
+        </div>
+        <div class="artwork-info">
+            <h1>Ancient Painted Vase</h1>
+            <p><strong>Artist:</strong> Unknown Artisan</p>
+            <p>A beautiful recreation of a traditional painted pot, rich with cultural symbols. View it in your own room using the AR feature on your phone!</p>
+            <div class="price">Price: $250.00</div>
+            <button id="buy-now-btn">Buy Now</button>
+        </div>
+    </main>
+
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="payment-flow">
+                <h2>Complete Your Purchase</h2>
+                <p>Scan the QR code with your UPI app</p>
+                <img src="assests/images/qr.jpg" alt="Fake UPI QR Code" width="200">
+                <p class="processing-text">Waiting for payment...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/artwork.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KalaKriti - Folk Art Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">KalaKriti</div>
+            <ul>
+                <li><a href="gallery.html">Art Gallery</a></li>
+                <li><a href="livestream.html">Live Workshops</a></li>
+                <li><a href="artwork.html">Art Shop</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Preserving Tradition, One Artwork at a Time.</h1>
+                <p>Explore, learn, and own a piece of cultural heritage.</p>
+            </div>
+            <video id="hero-video" autoplay loop muted playsinline>
+                <source src="assests/videos/video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+
+        <section id="gallery" class="art-gallery">
+            <h2>Featured Artworks</h2>
+            <div class="gallery-container">
+            </div>
+        </section>
+
+        <section id="ai-recognizer">
+            <h2>AI Art Style Recognizer (Demo)</h2>
+            <p>Upload an image to identify its folk art style.</p>
+            <input type="file" id="art-uploader" accept="image/*">
+            <button onclick="recognizeArt()">Analyze Art</button>
+            <div id="ai-result"></div>
+        </section>
+    </main>
+
+    <div id="artwork-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <img id="modal-img" src="" alt="Artwork Image">
+            <div id="modal-caption">
+                <h2 id="modal-title"></h2>
+                <p id="modal-artist"></p>
+                <p id="modal-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <section id="ar-showcase">
+        <div class="showcase-content">
+            <h2>Experience Art in Your Space</h2>
+            <p>Use our Augmented Reality feature to see how this beautiful handcrafted piece looks in your own room
+                before you buy. Tap the AR icon on your phone to begin.</p>
+        </div>
+        <div class="model-container">
+            <model-viewer src="assests/models/monument.glb" poster="assets/images/showcase_poster.png" ar
+                ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate shadow-intensity="1"
+                alt="A 3D model of a handcrafted pot">
+            </model-viewer>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>KalaKriti</h3>
+                <p>Our mission is to create a digital bridge between traditional folk artists and a global audience,
+                    ensuring their timeless craft thrives for generations to come.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="gallery.html">Art Gallery</a></li>
+                    <li><a href="livestream.html">Live Workshops</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram">IG</a>
+                    <a href="#" aria-label="Facebook">FB</a>
+                    <a href="#" aria-label="YouTube">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 KalaKriti. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gallery - KalaKriti</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html" style="color: #f0f0f0; text-decoration: none;">KalaKriti</a></div>
+            <ul>
+                <li><a href="index.html#gallery">Home</a></li>
+                <li><a href="livestream.html">Live Workshops</a></li>
+                <li><a href="index.html#ai-recognizer">Art Recognizer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="gallery-page">
+            <h1>Our Art Collection</h1>
+            <p>Discover the rich tapestry of Indian folk art.</p>
+
+            <div id="filter-container">
+                <button class="filter-btn active" data-style="all">All</button>
+                <button class="filter-btn" data-style="Madhubani">Madhubani</button>
+                <button class="filter-btn" data-style="Warli">Warli</button>
+                <button class="filter-btn" data-style="Pattachitra">Pattachitra</button>
+            </div>
+
+            <div id="full-gallery-container" class="gallery-container">
+            </div>
+        </section>
+    </main>
+
+    <div id="artwork-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <img id="modal-img" src="" alt="Artwork Image">
+            <div id="modal-caption">
+                <h2 id="modal-title"></h2>
+                <p id="modal-artist"></p>
+                <p id="modal-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/gallery.js"></script>
+</body>
+
+</html>

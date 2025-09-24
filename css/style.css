@@ -1,0 +1,385 @@
+/* Basic Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+header {
+    background: #1f1f1f;
+    padding: 1rem 5%;
+    border-bottom: 1px solid #333;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* --- Hero Section with VIDEO Background --- */
+
+.hero {
+    position: relative; /* This is essential for positioning the video inside */
+    height: 80vh; /* Adjust height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    overflow: hidden; /* Prevents the video from overflowing */
+}
+
+/* This rule targets your video and turns it into a background */
+#hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1; /* CRITICAL: Puts the video BEHIND the text */
+    object-fit: cover;
+}
+
+/* This adds the dark overlay for text readability */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0; /* Sits between the video and the text */
+}
+
+/* This ensures your text stays on top */
+.hero-content {
+    position: relative;
+    z-index: 1; /* CRITICAL: Puts the text IN FRONT of the video/overlay */
+    color: white;
+}
+
+
+/* --- Modal Styles --- */
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+    backdrop-filter: blur(5px); /* Optional: Adds a nice blur effect to the background */
+    animation: fadeIn 0.3s;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #1f1f1f;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 25px;
+    border: 1px solid #444;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    animation: slideIn 0.4s;
+}
+
+/* The Close Button */
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal Image and Caption */
+#modal-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain; /* Show the whole image without cropping */
+    border-radius: 8px;
+}
+
+#modal-caption {
+    margin-top: 15px;
+    text-align: center;
+    color: #f0f0f0;
+}
+
+#modal-title {
+    margin-bottom: 5px;
+}
+
+#modal-artist {
+    color: #ccc;
+    font-style: italic;
+}
+
+#modal-description {
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+
+/* Animations */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideIn {
+    from {transform: translateY(-50px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+
+/* Gallery */
+.art-gallery {
+    padding: 50px 5%;
+    text-align: center;
+}
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+.art-card {
+    background: #1f1f1f;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.art-card:hover {
+    transform: scale(1.05);
+}
+.art-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.art-card-info {
+    padding: 1rem;
+}
+
+/* AI Recognizer */
+#ai-recognizer {
+    text-align: center;
+    padding: 50px 20px;
+    background: #1f1f1f;
+}
+#ai-recognizer button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+#ai-result {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #28a745;
+}
+
+/* --- Navigation Buttons --- */
+.btn-nav {
+    padding: 8px 20px;
+    background: linear-gradient(90deg, var(--primary1, #00c6ff), var(--primary2, #0072ff));
+    color: white !important;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.btn-nav:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 114, 255, .3);
+}
+
+/* --- FOOTER STYLES --- */
+.site-footer {
+    background-color: #1f1f1f; /* A slightly lighter dark shade */
+    color: #b7c1cb; /* Muted text color */
+    padding: 40px 0;
+    border-top: 1px solid #333;
+    font-size: 14px;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-about, .footer-links, .footer-social {
+    flex: 1;
+    min-width: 250px; /* Ensures columns wrap nicely on smaller screens */
+}
+
+.site-footer h3 {
+    color: #f0f0f0;
+    font-size: 18px;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+/* Adds a nice underline effect to headings */
+.site-footer h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+}
+
+.footer-about p {
+    line-height: 1.7;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #b7c1cb;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.footer-links a:hover {
+    color: #00c6ff;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: #1f1f1f;
+    background-color: #b7c1cb;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+}
+
+.social-icons a:hover {
+    background-color: #00c6ff;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+/* --- 3D/AR Showcase Section Styles --- */
+#ar-showcase {
+    background-color: #1f1f1f; /* A slightly lighter dark shade */
+    padding: 60px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap; /* Allows stacking on smaller screens */
+    text-align: center;
+}
+
+.showcase-content {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+#ar-showcase h2 {
+    font-size: 2.5rem;
+    color: #f0f0f0;
+    margin-bottom: 15px;
+}
+
+#ar-showcase p {
+    font-size: 1.1rem;
+    color: #b7c1cb;
+    line-height: 1.7;
+}
+
+.model-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 450px;
+}
+
+model-viewer {
+    width: 100%;
+    height: 450px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    background-color: #121212;
+}
