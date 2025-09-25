@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Classy Login / Register</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg1:#0f2027; --bg2:#203a43; --bg3:#2c5364;
+      --glass:rgba(255,255,255,.10);
+      --glass-strong:rgba(255,255,255,.16);
+      --text:#e8eef6; --muted:#b7c1cb;
+      --primary1:#00c6ff; --primary2:#0072ff;
+      --error:#ff4d4f; --success:#22c55e;
+    }
+    html,body {
+      height:100%;
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at -10% -20%, #0b1720 0%, transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 45%, var(--bg3));
+    }
+    .wrap {
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+    .card {
+      width:min(92vw, 420px);
+      background:var(--glass);
+      backdrop-filter: blur(20px) saturate(120%);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      padding:28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+    .title {
+      margin:2px 0 18px;
+      font-weight:800;
+      letter-spacing:.3px;
+      text-align:center;
+    }
+    .group { position:relative; margin:14px 0; }
+    .input {
+      width:100%;
+      padding:12px 46px 12px 44px;
+      border:none; outline:none;
+      border-radius:28px;
+      background:var(--glass-strong);
+      color:var(--text);
+      font-size:15px;
+      transition:box-shadow .25s, background .25s;
+    }
+    .input::placeholder { color:#c9d3dd80; }
+    .input:focus {
+      background:rgba(255,255,255,.22);
+      box-shadow:0 0 0 2px #ffffff2a, 0 0 0 6px #0072ff22;
+    }
+    .icon {
+      position:absolute; left:14px; top:50%; transform:translateY(-50%);
+      font-size:18px; opacity:.9;
+    }
+    .toggle-eye {
+      position:absolute; right:10px; top:50%; transform:translateY(-50%);
+      background:transparent; border:none; color:var(--muted);
+      cursor:pointer; font-size:18px; padding:6px;
+    }
+    .row {
+      display:flex; align-items:center; justify-content:space-between;
+      font-size:13px; color:var(--muted); margin:6px 2px 14px;
+    }
+    .row a {
+      color:#d7eaff; text-decoration:none; border-bottom:1px dashed #d7eaff55;
+    }
+    .row a:hover { border-bottom-color:#d7eaff; }
+    .btn {
+      width:100%; border:none; cursor:pointer; color:white;
+      padding:12px 16px; border-radius:28px; font-size:16px; font-weight:600;
+      background:linear-gradient(90deg, var(--primary1), var(--primary2));
+      box-shadow: 0 8px 18px rgba(0,114,255,.35);
+      transition: transform .12s ease, filter .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); filter:saturate(1.05); }
+    .btn:active { transform: translateY(0); }
+    .switch {
+      text-align:center; margin-top:14px; font-size:14px; color:var(--muted);
+    }
+    .switch button {
+      background:none; border:none; color:var(--primary1);
+      font-weight:700; cursor:pointer; padding:0 4px;
+    }
+    .msg {
+      display:none; margin-top:12px; padding:10px 12px; border-radius:12px; font-size:13px;
+      border:1px solid transparent;
+    }
+    .msg.error { display:block; background:#ff4d4f22; border-color:#ff4d4f66; color:var(--error); }
+    .msg.success { display:block; background:#22c55e22; border-color:#22c55e66; color:var(--success); }
+    input[type="checkbox"]{ accent-color:#1fa2ff; transform:translateY(1px); }
+    a, button, input, select, textarea {
+      outline-color:#7cc3ff; outline-offset:2px;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card" aria-live="polite">
+      <h1 class="title" id="formTitle">Login</h1>
+      <form id="authForm" novalidate>
+        <div class="group">
+          <span class="icon">📧</span>
+          <input class="input" id="email" type="email" placeholder="Email" autocomplete="username" required aria-label="Email" />
+        </div>
+        <div class="group">
+          <span class="icon">🔒</span>
+          <input class="input" id="password" type="password" placeholder="Password" autocomplete="current-password" required aria-label="Password" />
+          <button type="button" class="toggle-eye" id="togglePw" aria-label="Toggle password visibility">👁</button>
+        </div>
+        <div class="row">
+          <label><input type="checkbox" id="remember"> Remember</label>
+          <a href="#" id="forgot">Forgot Password?</a>
+        </div>
+        <button class="btn" id="submitBtn" type="submit">Login</button>
+      </form>
+      <p class="switch" id="switchText">
+        Don’t have an account?
+        <button id="switchBtn">Register</button>
+      </p>
+      <div id="message" class="msg" role="status"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } 
+      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCJ9YgCNin0sh5o52ozmJVEMniRlzDQtOU",
+  authDomain: "mehfil-hackathon.firebaseapp.com",
+  projectId: "mehfil-hackathon",
+  storageBucket: "mehfil-hackathon.firebasestorage.app",
+  messagingSenderId: "442926066294",
+  appId: "1:442926066294:web:6d2f1b05bc71701faa8d57",
+  measurementId: "G-ZR0V6J5W9M"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const formTitle = document.getElementById("formTitle");
+    const submitBtn = document.getElementById("submitBtn");
+    const msg = document.getElementById("message");
+    const emailEl = document.getElementById("email");
+    const passEl = document.getElementById("password");
+    const rememberEl = document.getElementById("remember");
+    const forgotEl = document.getElementById("forgot");
+    const togglePw = document.getElementById("togglePw");
+    let mode = "login";
+
+    function show(text, type) {
+      msg.textContent = text;
+      msg.className = msg ${type};
+    }
+
+    togglePw.addEventListener("click", () => {
+      passEl.type = passEl.type === "password" ? "text" : "password";
+    });
+
+    function switchMode() {
+      mode = mode === "login" ? "register" : "login";
+      const isLogin = mode === "login";
+      formTitle.textContent = isLogin ? "Login" : "Register";
+      submitBtn.textContent = isLogin ? "Login" : "Create Account";
+      document.getElementById("switchText").innerHTML = isLogin
+        ? Don’t have an account? <button id="switchBtn">Register</button>
+        : Already registered? <button id="switchBtn">Login</button>;
+      document.getElementById("switchBtn").addEventListener("click", (e) => { e.preventDefault(); switchMode(); });
+      msg.style.display = "none";
+    }
+    document.getElementById("switchBtn").addEventListener("click", (e) => { e.preventDefault(); switchMode(); });
+
+    forgotEl.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const email = emailEl.value.trim();
+      if (!email) return show("Enter your email first.", "error");
+      try {
+        await sendPasswordResetEmail(auth, email);
+        show("Password reset link sent! Check your inbox.", "success");
+      } catch (error) {
+        show(error.message, "error");
+      }
+    });
+
+    document.getElementById("authForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = emailEl.value.trim();
+      const password = passEl.value.trim();
+      if (!email || !password) return show("Please fill in all fields.", "error");
+      if (password.length < 6) return show("Password must be at least 6 characters.", "error");
+      try {
+        if (mode === "register") {
+          await createUserWithEmailAndPassword(auth, email, password);
+          show("Account created successfully!", "success");
+          setTimeout(() => switchMode(), 1000);
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+          show("Login successful!", "success");
+        }
+      } catch (error) {
+        // ✅ Friendly error handling
+        if (error.code === "auth/email-already-in-use") {
+          show("This email is already registered.", "error");
+        } else if (error.code === "auth/invalid-email") {
+          show("Invalid email format.", "error");
+        } else if (error.code === "auth/invalid-credential") {
+          show("Incorrect email or password.", "error");
+        } else {
+          show(error.message, "error");
+        }
+      }
+    });
+  </script>
+</body>
+</html>
